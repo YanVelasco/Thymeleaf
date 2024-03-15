@@ -1,29 +1,28 @@
 package com.example.front_gestao_vagas;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
 public class PrimeiraPaginaController {
     @GetMapping("/home")
-    public  String primeiraPagina(Model model){
-        model.addAttribute("mensagemDaController", "Primeira mensagem da controller!");
+    public  String primeiraPagina() {
         return "primeiraPagina";
     }
 
     @GetMapping("/login")
-    public  String login(Model model){
+    public  String login() {
         return "candidate/login";
     }
 
     @PostMapping("/create")
-    public String cadastroCandidate(@RequestParam("name") String name){
-        System.out.printf("Nome do candidato: %s\n", name);
-        return "/candidate/login";
+    public String cadastroCandidate(Pessoa pessoa) {
+        System.out.printf("%s, %s, %s", pessoa.nome, pessoa.email, pessoa.usuario);
+        return "redirect:/home";
     }
+
+    private record Pessoa(String usuario, String email, String nome) {}
 }
