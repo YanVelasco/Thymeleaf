@@ -1,6 +1,7 @@
 package com.example.front_gestao_vagas;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +20,10 @@ public class PrimeiraPaginaController {
     }
 
     @PostMapping("/create")
-    public String cadastroCandidate(Pessoa pessoa) {
+    public String cadastroCandidate(Model model,Pessoa pessoa) {
         System.out.printf("%s, %s, %s", pessoa.nome, pessoa.email, pessoa.usuario);
-        return "redirect:/home";
+        model.addAttribute("Pessoa", pessoa);
+        return "candidate/info";
     }
 
     private record Pessoa(String usuario, String email, String nome) {}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Informações do candidato
+    </title>
+</head>
+<body>
+        <h1>
+            Informações do candidato
+        </h1>
+        <form th:object="${pessoa}">
+            <p th:text="${pessoa.nome}"></p>
+            <p th:text="${pessoa.email}"></p>
+            <p th:text="${pessoa.usuario}"></p>
+        </form>
+</body>
+</html>
