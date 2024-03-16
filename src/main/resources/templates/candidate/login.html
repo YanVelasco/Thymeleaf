@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Login</title>
 </head>
-<body>
-    <h1>Login do candidato</h1>
+<body class="bg-gray-900 h-screen flex justify-center items-center">
+    <form action="" class="flex gap-24">
+        <div class="text-white max-w-80 text-6xl flex items-center">
+            Gestão de Vagas
+        </div>
+        <div class="space-y-8 bg-zinc-950 rounded-md p-20">
+                <input type="text" name="username" class="bg-gray-100 text=gray-900 text-xd rounded w-96 block p-4" placeholder="Usuário">
+                <input type="password" name="password" class="bg-gray-100 text=gray-900 text-xd rounded w-96 block p-4" placeholder="Senha">
+            <button type="submit" class="bg-blue-500 text-white text-xd rounded w-96 block p-4 hover:bg-blue-600">Entrar</button>
+            <a href="/candidate/register" class="text-blue-500 text-xd block justify-center text-center hover:text-blue-600">Cadastrar-se</a>
+        </div>
+    </form>
 </body>
 </html>
