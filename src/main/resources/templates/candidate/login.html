@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Login</title>
+    <title>Login do Candidat</title>
 </head>
-<body class="bg-gray-900 h-screen flex justify-center items-center">
-    <form action="" class="flex gap-24">
+<body class="bg-gray-900 h-screen flex justify-center items-center">1
+    <form action="" class="flex gap-24" th:action="@{/candidate/signIn}" method="post">
         <div class="text-white max-w-80 text-6xl flex items-center">
             Gestão de Vagas
         </div>
-        <div class="space-y-8 bg-zinc-950 rounded-md p-20">
-                <input type="text" name="username" class="bg-gray-100 text=gray-900 text-xd rounded w-96 block p-4" placeholder="Usuário">
-                <input type="password" name="password" class="bg-gray-100 text=gray-900 text-xd rounded w-96 block p-4" placeholder="Senha">
+        <div class="space-y-8 bg-zinc-950 rounded-md p-20 gap-24">
+            <label class="mb-4">
+                <input type="text" name="username" class="bg-gray-100 text-gray-900 text-xd rounded w-96 block p-4" placeholder="Usuário">
+            </label>
+            <label class="mb-4">
+                <input type="password" name="password" class="bg-gray-100 text-gray-900 text-xd rounded w-96 block p-4" placeholder="Senha">
+            </label>
+            <p class="text-red-400" th:if="${error_message}" th:text="${error_message}"></p>
             <button type="submit" class="bg-blue-500 text-white text-xd rounded w-96 block p-4 hover:bg-blue-600">Entrar</button>
             <a href="/candidate/register" class="text-blue-500 text-xd block justify-center text-center hover:text-blue-600">Cadastrar-se</a>
         </div>
