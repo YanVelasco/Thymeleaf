@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Service
 public class CandidateService {
-    public TokenDTO signIn(String username, String password) {
+    public TokenDTO login(String username, String password) {
         RestTemplate restTemplate = new RestTemplate ();
 
         HttpHeaders headers = new HttpHeaders ();

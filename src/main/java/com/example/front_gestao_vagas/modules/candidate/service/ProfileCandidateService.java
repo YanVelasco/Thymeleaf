@@ -17,7 +17,7 @@ public class ProfileCandidateService {
         headers.setBearerAuth (token);
         HttpEntity<Map<String, String>> request = new HttpEntity<> (headers);
 
-        var result = restTemplate.exchange ("http://localhost:8080/candidate/", HttpMethod.GET, request, String.class);
+        var result = restTemplate.exchange ("http://localhost:8080/candidate", HttpMethod.GET, request, String.class);
         System.out.println (result);
         return result.getBody ();
     }

@@ -38,12 +38,12 @@ public class CandidateController {
     public String signIn(RedirectAttributes redirectAttributes, HttpSession httpSession, String username, String password) {
 
         try {
-            var token = candidateService.signIn (username, password);
+            var token = candidateService.login (username, password);
             var grantedAuthorities = token.roles ().stream ()
                     .map (role -> new SimpleGrantedAuthority ( "ROLE_" + role.toString ().toUpperCase ())).toList ();
 
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken (null, null, grantedAuthorities);
-            auth.setDetails (token.access_token ());
+            auth.setDetails (token.access_token ().getClass ());
 
             SecurityContextHolder.getContext ().setAuthentication (auth);
             SecurityContext context = SecurityContextHolder.getContext ();
