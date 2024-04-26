@@ -1,10 +1,12 @@
 package com.example.front_gestao_vagas.modules.candidate.controller;
 
 import com.example.front_gestao_vagas.modules.candidate.service.CandidateService;
+import com.example.front_gestao_vagas.modules.candidate.service.ProfileCandidateService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashSet;
 
 @Controller
 @RequestMapping("/candidate")
@@ -21,8 +22,11 @@ public class CandidateController {
 
     private final CandidateService candidateService;
 
-    public CandidateController(CandidateService candidateService) {
+    private final ProfileCandidateService profileCandidateService;
+
+    public CandidateController(CandidateService candidateService, ProfileCandidateService profileCandidateService) {
         this.candidateService = candidateService;
+        this.profileCandidateService = profileCandidateService;
     }
 
     @GetMapping("/login")
@@ -35,14 +39,11 @@ public class CandidateController {
 
         try {
             var token = candidateService.signIn (username, password);
-            var grantedAuthorities = new HashSet<GrantedAuthority> ();
-            for (String role : token.roles ()) {
-                GrantedAuthority grantedAuthority = () -> "ROLE_" + role.toString ().toUpperCase ();
-                grantedAuthorities.add (grantedAuthority);
-            }
+            var grantedAuthorities = token.roles ().stream ()
+                    .map (role -> new SimpleGrantedAuthority ( "ROLE_" + role.toString ().toUpperCase ())).toList ();
 
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken (null, null, grantedAuthorities);
-            auth.setDetails (token);
+            auth.setDetails (token.access_token ());
 
             SecurityContextHolder.getContext ().setAuthentication (auth);
             SecurityContext context = SecurityContextHolder.getContext ();
@@ -60,6 +61,8 @@ public class CandidateController {
     @GetMapping("/profile")
     @PreAuthorize("hasRole('CANDIDATE')")
     public String profile() {
+        Authentication authentication = SecurityContextHolder.getContext ().getAuthentication ();
+        var result =  profileCandidateService.execute (authentication.getDetails ().toString ());
         return "candidate/profile";
     }
 
