@@ -1,4 +1,6 @@
 package com.example.front_gestao_vagas.modules.candidate.dto;
 
-public record TokenDTO(String acces_token) {
+import java.util.List;
+
+public record TokenDTO(String access_token , List<String> roles, Long expires_in) {
 }
